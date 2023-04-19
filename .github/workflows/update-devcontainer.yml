@@ -9,7 +9,7 @@ on:
       directory:
         type: string
         description: Directory contains `.devcontainer` directory
-        default: 
+        default: .
       push:
         type: string
         description: Whether to push image to repository or not. Accepts `never` or `always`.
