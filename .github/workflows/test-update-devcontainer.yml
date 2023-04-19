@@ -1,0 +1,20 @@
+name: test update-devcontainer.yml
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/update-devcontainer.yml"
+      - ".github/workflows/test-update-devcontainer.yml"
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        directory:
+          - with-directory
+          - without-directory
+          - no-initialize-command
+    uses: ./.github/workflows/update-devcontainer.yml
+    with:
+      directory: fixtures/update-devcontainer/${{ matrix.directory }}
+      push: never

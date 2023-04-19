@@ -1,0 +1,6 @@
+{
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "initializeCommand": "echo \"this is line 1\nthis is line 2\" > testfile.txt"
+}
