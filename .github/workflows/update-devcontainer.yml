@@ -32,7 +32,7 @@ jobs:
         run: |
           npm install -g @devcontainers/cli
           
-          initializeCommand=`devcontainer read-configuration --workspace-folder "${{ inputs.directory }}" | jq .configuration.initializeCommand`
+          initializeCommand=`devcontainer read-configuration --workspace-folder "${{ inputs.directory }}" | jq --raw-output .configuration.initializeCommand`
           if [[ $initializeCommand != 'null' ]]; then
             echo "about to execute $initializeCommand"
             eval "$initializeCommand"
