@@ -2,5 +2,5 @@
     "build": {
         "dockerfile": "Dockerfile"
     },
-    "initializeCommand": "echo \"this is line 1\nthis is line 2\" | tee testfile.txt"
+    "initializeCommand": "echo \"this is line 1\nthis is line 2\" | tee ${localWorkspaceFolder}/testfile.txt"
 }
