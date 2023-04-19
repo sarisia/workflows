@@ -23,6 +23,17 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ github.token }}
 
+      - name: run initializeCommand
+        # temporary workaround. See https://github.com/devcontainers/cli/issues/190
+        run: |
+          npm install -g @devcontainers/cli
+          
+          initializeCommand=`devcontainer read-configuration --workspace-folder . | jq .configuration.initializeCommand`
+          if [[ $initializeCommand != 'null' ]]; then
+            echo "about to execute $initializeCommand"
+            eval "$initializeCommand"
+          fi
+
       - uses: devcontainers/ci@72700878095f87b851a6c4405a16056caffdc577
         with:
           imageName: ${{ inputs.image-name }}
