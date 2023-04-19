@@ -10,6 +10,13 @@ on:
         type: string
         description: Directory contains `.devcontainer` directory
         default: 
+      push:
+        type: string
+        description: whether to push image to repository or not
+        options:
+          - never
+          - always
+        default: always
 
 jobs:
   update-devcontainer:
@@ -38,4 +45,4 @@ jobs:
         with:
           imageName: ${{ inputs.image-name }}
           subFolder: ${{ inputs.directory }}
-          push: always
+          push: ${{ inputs.push }}
