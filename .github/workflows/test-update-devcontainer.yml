@@ -5,6 +5,7 @@ on:
     paths:
       - ".github/workflows/update-devcontainer.yml"
       - ".github/workflows/test-update-devcontainer.yml"
+      - "fixtures/update-devcontainer/**/*"
 
 jobs:
   test:
