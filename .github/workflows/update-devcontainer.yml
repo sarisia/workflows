@@ -27,16 +27,16 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ github.token }}
 
-      - name: run initializeCommand
-        # temporary workaround. See https://github.com/devcontainers/cli/issues/190
-        run: |
-          npm install -g @devcontainers/cli
+      # - name: run initializeCommand
+      #   # temporary workaround. See https://github.com/devcontainers/cli/issues/190
+      #   run: |
+      #     npm install -g @devcontainers/cli
           
-          initializeCommand=`devcontainer read-configuration --workspace-folder "${{ inputs.directory }}" | jq --raw-output .configuration.initializeCommand`
-          if [[ $initializeCommand != 'null' ]]; then
-            echo "about to execute $initializeCommand"
-            eval "$initializeCommand"
-          fi
+      #     initializeCommand=`devcontainer read-configuration --workspace-folder "${{ inputs.directory }}" | jq --raw-output .configuration.initializeCommand`
+      #     if [[ $initializeCommand != 'null' ]]; then
+      #       echo "about to execute $initializeCommand"
+      #       eval "$initializeCommand"
+      #     fi
 
       - uses: devcontainers/ci@c3e31cc561800ac318ed000e22ffc6713c93d009
         with:
