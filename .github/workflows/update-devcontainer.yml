@@ -44,3 +44,4 @@ jobs:
           subFolder: ${{ inputs.directory }}
           push: ${{ inputs.push }}
           noCache: true
+          runCmd: echo built
