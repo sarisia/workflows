@@ -27,20 +27,17 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ github.token }}
 
-      - name: run initializeCommand
-        # temporary workaround. See https://github.com/devcontainers/cli/issues/190
+      - name: actual build
+        # use devcontainer up instead of devcontainer build. See https://github.com/devcontainers/cli/issues/190
         run: |
-          npm install -g @devcontainers/cli
-          
-          initializeCommand=`devcontainer read-configuration --workspace-folder "${{ inputs.directory }}" | jq --raw-output .configuration.initializeCommand`
-          if [[ $initializeCommand != 'null' ]]; then
-            echo "about to execute $initializeCommand"
-            eval "$initializeCommand"
-          fi
+          set -e
 
-      - uses: devcontainers/ci@c3e31cc561800ac318ed000e22ffc6713c93d009
+          npm install -g @devcontainers/cli
+          devcontainer up --workspace-folder ${{ inputs.directory }} --prebuild --build-no-cache --skip-post-create
+
+      - name: upload image
+        uses: devcontainers/ci@c3e31cc561800ac318ed000e22ffc6713c93d009
         with:
           imageName: ${{ inputs.image-name }}
           subFolder: ${{ inputs.directory }}
           push: ${{ inputs.push }}
-          noCache: true
