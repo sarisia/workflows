@@ -1,0 +1,9 @@
+{
+    "build": {
+        "dockerfile": "../Dockerfile"
+    },
+    "initializeCommand": {
+        "create-testfile1": "echo \"this is testfile1\" | tee ${localWorkspaceFolder}/testfile1.txt",
+        "create-testfile2": "echo \"this is testfile2\" | tee ${localWorkspaceFolder}/testfile2.txt"
+    }
+}

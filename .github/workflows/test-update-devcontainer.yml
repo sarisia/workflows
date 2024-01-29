@@ -21,6 +21,7 @@ jobs:
           - with-directory
           - without-directory
           - no-initialize-command
+          - object-initialize-command
     uses: ./.github/workflows/update-devcontainer.yml
     with:
       directory: fixtures/update-devcontainer/${{ matrix.directory }}
