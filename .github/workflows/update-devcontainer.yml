@@ -36,7 +36,7 @@ jobs:
           devcontainer up --workspace-folder ${{ inputs.directory }} --prebuild --build-no-cache --skip-post-create
 
       - name: upload image
-        uses: devcontainers/ci@3d462823359c481c587cb7426f39775f24257115
+        uses: devcontainers/ci@7957e0cf6d027a8ab027745f399fcdbd3aa74f0f
         with:
           imageName: ${{ inputs.image-name }}
           subFolder: ${{ inputs.directory }}
