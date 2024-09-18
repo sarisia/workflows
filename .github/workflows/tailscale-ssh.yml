@@ -1,0 +1,42 @@
+name: Tailscale SSH
+on:
+  workflow_call:
+    inputs:
+      client-id:
+        type: string
+        required: true
+        description: Tailscale Client ID. See https://login.tailscale.com/admin/settings/oauth
+      client-secret:
+        type: string
+        required: true
+        description: Tailscale Client Secret. See https://login.tailscale.com/admin/settings/oauth
+      version:
+        type: string
+        description: Tailscale version
+        default: ''
+      tags:
+        type: string
+        description: Comma-separated tags
+        default: 'tag:github-actions'
+      hostname:
+        type: string
+        description: Hostname
+        default: 'actions'
+
+jobs:
+  tailscale:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: tailscale/github-action@16d7e0b7812f55e668628a71630a09956522baa9
+        with:
+          oauth-client-id: ${{ inputs.client-id }}
+          oauth-secret: ${{ inputs.client-secret }}
+          tags: ${{ inputs.tags }}
+          args: --ssh
+          hostname: ${{ inputs.hostname }}
+          version: ${{ inputs.version }}
+
+      - run: sleep infinity
+
+      - run: sudo tailscale logout
+        if: ${{ always() }}
