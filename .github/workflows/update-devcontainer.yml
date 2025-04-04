@@ -6,6 +6,10 @@ on:
         type: string
         description: Image name to push, including registry
         default: ghcr.io/${{ github.repository }}/devcontainer
+      cache-image-name:
+        type: string
+        description: Cache image name to push, including registry
+        default: ghcr.io/${{ github.repository }}/devcontainer-cache
       directory:
         type: string
         description: Directory contains `.devcontainer` directory
@@ -27,17 +31,28 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ github.token }}
 
-      - name: actual build
+      - name: build
         # use devcontainer up instead of devcontainer build. See https://github.com/devcontainers/cli/issues/190
         run: |
           set -e
 
+          # actual build
           npm install -g @devcontainers/cli
-          devcontainer up --workspace-folder ${{ inputs.directory }} --prebuild --build-no-cache --skip-post-create
+          devcontainer up \
+            --workspace-folder ${{ inputs.directory }} \
+            --build-no-cache \
+            --prebuild \
+            --skip-post-create
 
-      - name: upload image
-        uses: devcontainers/ci@3d462823359c481c587cb7426f39775f24257115
-        with:
-          imageName: ${{ inputs.image-name }}
-          subFolder: ${{ inputs.directory }}
-          push: ${{ inputs.push }}
+          # push image with inline cache
+          devcontainer build \
+            --workspace-folder ${{ inputs.directory }} \
+            --image-name ${{ inputs.image-name }} \
+            --cache-to type=inline \
+            --push
+
+          # push cache image
+          devcontainer build \
+            --workspace-folder ${{ inputs.directory }} \
+            --image-name ${{ inputs.image-name }} \
+            --cache-to type=registry,mode=max,ref=${{ inputs.image-name }}
