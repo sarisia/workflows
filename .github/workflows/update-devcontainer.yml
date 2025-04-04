@@ -44,15 +44,18 @@ jobs:
             --prebuild \
             --skip-post-create
 
-          # push image with inline cache
+          # image with inline cache
           devcontainer build \
             --workspace-folder ${{ inputs.directory }} \
             --image-name ${{ inputs.image-name }} \
-            --cache-to type=inline \
-            --push
+            --cache-to type=inline
 
-          # push cache image
+          # cache image
           devcontainer build \
             --workspace-folder ${{ inputs.directory }} \
             --image-name ${{ inputs.image-name }} \
             --cache-to type=registry,mode=max,ref=${{ inputs.image-name }}
+
+          # push
+          docker push ${{ inputs.image-name }}
+          docker push ${{ inputs.cache-image-name }}
