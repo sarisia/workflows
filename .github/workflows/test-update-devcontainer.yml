@@ -1,6 +1,8 @@
 name: test update-devcontainer.yml
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "17 3 * * 1"
   push:
     paths:
       - ".github/workflows/update-devcontainer.yml"
