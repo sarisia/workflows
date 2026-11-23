@@ -18,6 +18,9 @@ on:
 jobs:
   update-devcontainer:
     runs-on: ubuntu-latest
+    env:
+      # workaround for https://github.com/devcontainers/cli/issues/1320
+      BUILDX_BAKE_ENTITLEMENTS_FS: "0"
     steps:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
 
